@@ -194,7 +194,7 @@ foreach($medias as $media){
 		echo $imdb_rating;
 		echo "</td>";
 		echo "<td>";
-		echo "<input type='checkbox' class='rmbox' name='file".$totalMediaCount."' value=" . urlencode($file) . " >";
+		echo "<input type='checkbox' class='rmbox' name='file".$totalMediaCount."' value=" . utf8_encode($file) . " >";
 		echo "</td>";
 		echo "</tr>";
 	}
