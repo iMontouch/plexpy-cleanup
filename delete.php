@@ -1,6 +1,6 @@
 <?php
 foreach($_POST as $path){
-	echo "Deleted: " . $path . "<br>";
+	echo "Deleted: " . urldecode($path) . "<br>";
 	unlink($path);
 }
 ?>
