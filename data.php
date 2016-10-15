@@ -80,7 +80,7 @@ function appendFilters($imdb_rating, $title, $addedAt, $playCount, $lastPlayed, 
 	$maxSize = varGET('maxSize',999999999999999);
 
 	//Filter Rating
-	if($imdb_rating < $minRating || $imdb_rating > $maxRating || $imdb_rating != 0){
+	if($imdb_rating < $minRating || $imdb_rating > $maxRating || $imdb_rating == 0){
 		return false;
 	}
 
