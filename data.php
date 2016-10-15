@@ -1,6 +1,7 @@
 <?php
 include 'plex.php';
 include 'config.php';
+include 'db.php';
 
 //Get the JSON from PlexPy
 //TODO: Add live URL + parameters for different library types
@@ -21,7 +22,7 @@ function readableDate($epoch){
 	if($epoch==""){
 		return "Never";
 	}
-	
+
 	return date("d.m.y", $epoch);
 }
 
@@ -29,7 +30,7 @@ function readableDate($epoch){
 function readableFileSize($filesize){
 	$roundedGB = round($filesize/1024/1024/1024, 2);
 	$roundedTB = round($filesize/1024/1024/1024/1024, 2);
-	
+
 	if(strlen($roundedGB)>5){
 		return $roundedTB . " TB";
 	} else {
@@ -58,16 +59,16 @@ function getMetadata($ratingkey, $apikey){
 	$json2=file_get_contents("http://imontou.ch:8181/api/v2?apikey=".$apikey."&cmd=get_metadata&rating_key=".$ratingkey);
 	$data2=json_decode($json2, true);
 	$metadata=$data2['response']['data']['metadata'];
-	
+
 	return $metadata;
 }
 
 function appendFilters($imdb_rating, $title, $addedAt, $playCount, $lastPlayed, $size){
 	//User defined filters
-	
+
 	$minRating = varGET('minRating',0);
 	$maxRating = varGET('maxRating',10);
-	
+
 	$searchString = varGET('searchString',"");
 	$minAddedAt = varGET('minAddedAt',0);
 	$maxAddedAt = varGET('maxAddedAt',9999999999999);
@@ -77,12 +78,12 @@ function appendFilters($imdb_rating, $title, $addedAt, $playCount, $lastPlayed, 
 	$maxLastPlayed = varGET('maxLastPlayed',9999999999999);
 	$minSize = varGET('minSize',0);
 	$maxSize = varGET('maxSize',999999999999999);
-	
+
 	//Filter Rating
-	if($imdb_rating < $minRating || $imdb_rating > $maxRating){
+	if(($imdb_rating < $minRating || $imdb_rating > $maxRating) && ($imdb_rating != 0)){
 		return false;
 	}
-	
+
 	//Filter by String
 	if($searchString != ""){
 		//Look for occurences in title
@@ -90,7 +91,7 @@ function appendFilters($imdb_rating, $title, $addedAt, $playCount, $lastPlayed, 
 			return false;
 		}
 	}
-	
+
 	//Filter by Added Date
 	if($addedAt < $minAddedAt || $addedAt > $maxAddedAt){
 		return false;
@@ -110,7 +111,7 @@ function appendFilters($imdb_rating, $title, $addedAt, $playCount, $lastPlayed, 
 	if($size < $minSize || $size > $maxSize){
 		return false;
 	}
-	
+
 	return true;
 }
 ?>
@@ -142,7 +143,7 @@ function appendFilters($imdb_rating, $title, $addedAt, $playCount, $lastPlayed, 
 
 <?php
 
-foreach($medias as $media){		
+foreach($medias as $media){
 	//Read json contents to variables
 	$title = $media['title'];
 	$year = $media['year'];
@@ -156,22 +157,22 @@ foreach($medias as $media){
 	$play_count = $media['play_count'];
 	$added_at = $media['added_at'];
 	$parent_media_index = $media['parent_media_index'];
-	
-	
+
+
 	//Get Plex Data
 	$metadata = getMovieByRatingkey($rating_key, $plexMovies);
-	
+
 	$imdb_rating = $metadata['rating'];
 	$file = $metadata['file'];
-	
-	
-	//Append filters	
+
+
+	//Append filters
 	if (appendFilters($imdb_rating, $title, $added_at, $play_count, $last_played, $file_size)){
-		
+
 		//Calculate data for statistics
 		$totalFileSize = $totalFileSize + $file_size;
 		$totalMediaCount++;
-		
+
 		//Echo variables
 		echo "<tr>";
 		echo "<td>";
