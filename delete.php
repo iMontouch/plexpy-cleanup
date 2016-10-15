@@ -1,13 +1,14 @@
 <?php
 set_time_limit(120);
 foreach($_POST as $path){
-	if(unlink(utf8_decode($path))){
-		echo "Deleted: " . utf8_decode($path) . "<br>";
+	$myPath = urldecode(utf8_decode($path));
+	if(unlink($myPath)){
+		echo "Deleted: " . $myPath . "<br>";
 	} else {
-		if(unlink(utf8_decode($path))){
+		if(unlink($myPath)){
 
 		}
-		echo "Failed Deleting: " . utf8_decode($path) . "<br>";
+		echo "Failed Deleting: " . $myPath . "<br>";
 	}
 }
 ?>
