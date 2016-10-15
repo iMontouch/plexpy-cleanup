@@ -80,7 +80,7 @@ function appendFilters($imdb_rating, $title, $addedAt, $playCount, $lastPlayed, 
 	$maxSize = varGET('maxSize',999999999999999);
 
 	//Filter Rating
-	if(($imdb_rating < $minRating || $imdb_rating > $maxRating) && ($imdb_rating != 0)){
+	if($imdb_rating < $minRating || $imdb_rating > $maxRating || $imdb_rating != 0){
 		return false;
 	}
 
@@ -115,7 +115,7 @@ function appendFilters($imdb_rating, $title, $addedAt, $playCount, $lastPlayed, 
 	return true;
 }
 ?>
-<form id="deleteForm" action="delete.php" method="get">
+<form id="deleteForm" action="delete.php" method="post">
 <table style="width:100%">
 	<tr>
 		<th>

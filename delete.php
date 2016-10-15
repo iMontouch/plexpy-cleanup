@@ -1,5 +1,5 @@
 <?php
-foreach($_GET as $path){
+foreach($_POST as $path){
 	unlink($path);
 }
 ?>
