@@ -4,7 +4,7 @@ foreach($_POST as $path){
 	if(unlink(realpath(urldecode($path)))){
 		echo "Deleted: " . urldecode($path) . "<br>";
 	} else {
-		echo "Failed Deleting: " . urldecode($path) . ", " . realpath(urldecode($path)) . "<br>";
+		echo "Failed Deleting: " . urldecode($path) . ", " . realpath($path) . ", " . $path . "<br>";
 	}
 }
 ?>
