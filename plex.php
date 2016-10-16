@@ -49,7 +49,7 @@ function getPlexShowData($token){
 		$cur = array('rating_key'=>$rating_key,'rating'=>$rating);
 
 		array_push($showData, $cur);
-		//echo $rating_key . " | " . $rating . " | " . $file . "<br>";
+		echo $rating_key . " | " . $rating . "<br>";
 	}
 
 	return $showData;
