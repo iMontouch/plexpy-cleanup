@@ -13,6 +13,9 @@ $medias=$data['response']['data']['data'];
 //Get Plex Movies Metadata
 $plexMovies = getPlexMovieData($plexToken);
 
+//Get Plex Series Metadata
+$plexShows = getPlexShowData($plexToken);
+
 //Count data for request
 $totalFileSize=0;
 $totalMediaCount=0;
@@ -161,10 +164,18 @@ foreach($medias as $media){
 
 
 	//Get Plex Data
-	$metadata = getMovieByRatingkey($rating_key, $plexMovies);
+	if(libraryId==6){
+		$metadata = getMovieByRatingkey($rating_key, $plexMovies);
+		$imdb_rating = $metadata['rating'];
+		$file = $metadata['file'];
+	} else {
+		$metadata = getShowByRatingkey($rating_key, $plexMovies);
+		$imdb_rating = $metadata['rating'];
+		$file = "/home/imontouch/media/serien/" . $title;
+	}
 
-	$imdb_rating = $metadata['rating'];
-	$file = $metadata['file'];
+
+
 
 
 	//Append filters
