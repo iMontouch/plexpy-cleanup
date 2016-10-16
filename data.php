@@ -5,7 +5,8 @@ include 'db.php';
 
 //Get the JSON from PlexPy
 //TODO: Add live URL + parameters for different library types
-$json=file_get_contents("http://imontou.ch:8181/api/v2?apikey=".$apikey."&cmd=get_library_media_info&section_id=6&length=99999&order_column=last_played&order_dir=asc");
+$libraryId=varGET('library', 6);
+$json=file_get_contents("http://imontou.ch:8181/api/v2?apikey=".$apikey."&cmd=get_library_media_info&section_id=".$libraryId."&length=99999&order_column=last_played&order_dir=asc");
 $data=json_decode($json, true);
 $medias=$data['response']['data']['data'];
 

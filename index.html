@@ -41,7 +41,7 @@
 		</div>
 		<div class="col-md-2">
 			<h6>Section</h6><br>
-			<select name="top5" size="1" id="section">
+			<select name="library" size="1" id="section">
 			  <option>TV Shows</option>
 			  <option>Movies</option>
 			</select>
@@ -65,6 +65,19 @@
 			var playCount = document.getElementById("playcount").value;
 			var imdb_Max = document.getElementById("imdbMax").value;
 			var filesize = document.getElementById("filesize").value;
+      var library = document.getElementById("section").value;
+
+      var libId;
+      switch (library) {
+        case "TV Shows":
+          libId = 2;
+          break;
+        case "Movies":
+          libId = 6;
+          break;
+        default:
+          libId = 6;
+      }
 
 			var d = new Date();
 			d.setDate(d.getDate()-addedAtDays);
@@ -82,7 +95,8 @@
 							"&maxPlaycount=" + playCount +
 							"&maxRating=" + imdb_Max +
 							"&maxSize=" + filesize*1024*1024*1024 +
-							"&maxLastPlayed=" + lastPlayedAt;
+							"&maxLastPlayed=" + lastPlayedAt +
+              "&library=" + libId;
 
 			//console.log(requestURL);
 
