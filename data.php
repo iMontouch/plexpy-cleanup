@@ -169,7 +169,7 @@ foreach($medias as $media){
 		$imdb_rating = $metadata['rating'];
 		$file = $metadata['file'];
 	} else {
-		$metadata = getShowByRatingkey($rating_key, $plexMovies);
+		$metadata = getShowByRatingkey($rating_key, $plexShows);
 		$imdb_rating = $metadata['rating'];
 		$file = "/home/imontouch/media/serien/" . $title;
 	}
