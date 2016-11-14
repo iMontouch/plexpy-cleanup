@@ -164,7 +164,7 @@ foreach($medias as $media){
 
 
 	//Get Plex Data
-	if(libraryId==6){
+	if($libraryId==6){
 		$metadata = getMovieByRatingkey($rating_key, $plexMovies);
 		$imdb_rating = $metadata['rating'];
 		$file = $metadata['file'];
